@@ -13,11 +13,13 @@ public class SQL {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Files f = new Files();
-			
+		int o,z;
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
+		String n = "";
+		String s = "";
 		try
 		{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -28,9 +30,24 @@ public class SQL {
 		
 		while(true)
 		{
-			System.out.println("\nType your SQL statement and type Quit to quit:");	
-			String s = sc.nextLine();
-			if (s.equalsIgnoreCase("quit"))
+			System.out.println("\nChoose your option:\n 1.Enter SQL command \n 2.Choose from history\n 3.Quit");	
+			o =sc.nextInt();
+			sc.nextLine();
+			if (o==1)
+			{
+				System.out.println("\nType the name of your SQL statement");	
+				n = sc.nextLine();
+				System.out.println("Type your SQL statement");	
+				s = sc.nextLine();
+			}
+			if (o==2)
+			{
+				System.out.println(f.getQueryNames());
+				System.out.println("Chose number would you like to choose ? ");
+				z = sc.nextInt();
+				s = f.getQuery(z);
+			}
+			if (o==3)
 			{
 				System.out.println("Well okay let us call it a day. See you later.");
 				break;
@@ -79,7 +96,10 @@ public class SQL {
 			}
 			
 			f.logFile();
+			if (o==1) f.logQuery(n, s);
+			
 		}
+		
 
 		}catch (SQLException e) 
 		{
